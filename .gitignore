@@ -1,0 +1,9 @@
+bin
+target
+test-output
+.project
+.classpath
+.settings
+.idea
+.log
+.DS_Store

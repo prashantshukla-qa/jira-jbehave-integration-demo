@@ -1,0 +1,15 @@
+app_url: http://qa3-sam.cengage.com/app
+
+credentials:
+  instructor:
+    username: Inst_Auto-qa3@swelearning.com
+    password: password 
+  student:
+    username: Stud_Auto-qa3@swlearning.com
+    password: password
+      
+
+email:
+    send: yes
+    recepients:
+     recepient1: prashantshukla@qainfotech.com
