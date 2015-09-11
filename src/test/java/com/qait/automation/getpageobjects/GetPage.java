@@ -1,7 +1,7 @@
 package com.qait.automation.getpageobjects;
 
 import static com.qait.automation.getpageobjects.ObjectFileReader.getELementFromFile;
-import static com.qait.automation.samjbehavedemo.utils.ConfigPropertyReader.getProperty;
+import static com.qait.automation.utils.ConfigPropertyReader.getProperty;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.qait.automation.samjbehavedemo.utils.LayoutValidation;
+import com.qait.automation.utils.LayoutValidation;
 
 import static org.junit.Assert.fail;
 import static org.junit.Assert.assertTrue;
