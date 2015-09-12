@@ -22,7 +22,9 @@ import com.qait.automation.getstory.Constants;
 import com.qait.automation.getstory.JiraSprintStoryFinder;
 import com.qait.automation.utils.FileHandler;
 import com.qait.automation.getstory.JiraStoryDownloader;
-import com.qait.automation.stepdefs.PageStepDef;
+import com.qait.automation.stepdefs.HomePageStepDef;
+import com.qait.automation.stepdefs.LoginPageStepDef;
+import com.qait.automation.stepdefs.RegistrationPageStepDef;
 import com.qait.automation.stepdefs.StartTestSteps;
 
 import static com.qait.automation.utils.ConfigPropertyReader.getProperty;
@@ -118,7 +120,7 @@ public class StoryTest extends JUnitStories {
     public InjectableStepsFactory stepsFactory() {
         test = new TestSessionInitiator();
 
-        return new InstanceStepsFactory(configuration(), new StartTestSteps(test), new PageStepDef(test));
+        return new InstanceStepsFactory(configuration(), new StartTestSteps(test), new LoginPageStepDef(test), new HomePageStepDef(test), new RegistrationPageStepDef(test));
     }
 
     @Override

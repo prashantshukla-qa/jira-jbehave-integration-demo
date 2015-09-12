@@ -3,10 +3,9 @@ Page Title: SAM - Log In
 #Object Definitions
 ====================================================================================
 
-inp_username    css #username
-inp_password    css #password
-btn_login       css #login
-txt_error   css #error
+lnk_signin  css #sign_in_link
+lnk_register  css #register_link
+
 ====================================================================================
 
 @all, browsers

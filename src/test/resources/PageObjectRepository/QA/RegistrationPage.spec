@@ -1,12 +1,10 @@
-Page Title: SAM - Log In
+Page Title: DEMO APP - Registration Page
 
 #Object Definitions
 ====================================================================================
 
-inp_username    css #username
-inp_password    css #password
-btn_login       css #login
-txt_error   css #error
+lnk_register  css #register_link
+
 ====================================================================================
 
 @all, browsers

@@ -7,17 +7,13 @@ import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.annotations.Given;
 
 import com.qait.automation.TestSessionInitiator;
-import com.qait.automation.keywords.LoginPageActionKeyWords;
 
 public class StartTestSteps {
 
     TestSessionInitiator test;
-    LoginPageActionKeyWords loginpage;
-    public PageStepDef pagestep;
 
     public StartTestSteps(TestSessionInitiator test) {
         this.test = test;
-        loginpage = new LoginPageActionKeyWords(test.getDriver());
     }
 
     @BeforeStory

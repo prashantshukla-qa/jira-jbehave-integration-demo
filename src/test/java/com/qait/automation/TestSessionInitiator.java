@@ -2,7 +2,6 @@ package com.qait.automation;
 
 import static com.qait.automation.utils.ConfigPropertyReader.getProperty;
 
-import com.qait.automation.keywords.LoginPageActionKeyWords;
 import com.qait.automation.utils.TakeScreenshot;
 import static com.qait.automation.utils.YamlReader.getYamlValue;
 import static com.qait.automation.utils.YamlReader.setYamlFilePath;
@@ -32,7 +31,6 @@ public class TestSessionInitiator {
 	/**
 	 * Initiating the page objects
 	 */
-	public LoginPageActionKeyWords loginpage;
 
 	public TakeScreenshot takescreenshot;
 
@@ -88,6 +86,7 @@ public class TestSessionInitiator {
 		System.out.println("The test browser is :- "
 				+ _getSessionConfig().get("browser") + "\n");
 		driver.manage().deleteAllCookies();
+                driver.manage().window().maximize();
 		driver.get(base_url);
 	}
 
