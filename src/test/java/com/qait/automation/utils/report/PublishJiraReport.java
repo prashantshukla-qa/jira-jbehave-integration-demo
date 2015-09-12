@@ -215,7 +215,7 @@ public class PublishJiraReport {
     }
 
     private String getReopenJiraTicketJson() {
-        return "{ \"transition\": { \"id\": \"11\" }}";
+        return "{ \"transition\": { \"id\": \"41\" }}";
 
     }
 
