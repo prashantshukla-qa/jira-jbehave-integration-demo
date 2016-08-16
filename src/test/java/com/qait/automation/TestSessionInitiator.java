@@ -1,10 +1,12 @@
 package com.qait.automation;
 
-import static com.qait.automation.utils.ConfigPropertyReader.getProperty;
+import static com.qait.automation.samjbehavedemo.utils.ConfigPropertyReader.getProperty;
 
-import com.qait.automation.utils.TakeScreenshot;
-import static com.qait.automation.utils.YamlReader.getYamlValue;
-import static com.qait.automation.utils.YamlReader.setYamlFilePath;
+import com.qait.automation.sam.keywords.LoginPageActionKeyWords;
+import com.qait.automation.samjbehavedemo.utils.TakeScreenshot;
+
+import static com.qait.automation.samjbehavedemo.utils.YamlReader.getYamlValue;
+import static com.qait.automation.samjbehavedemo.utils.YamlReader.setYamlFilePath;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +33,7 @@ public class TestSessionInitiator {
 	/**
 	 * Initiating the page objects
 	 */
+	public LoginPageActionKeyWords loginpage;
 
 	public TakeScreenshot takescreenshot;
 
@@ -86,7 +89,6 @@ public class TestSessionInitiator {
 		System.out.println("The test browser is :- "
 				+ _getSessionConfig().get("browser") + "\n");
 		driver.manage().deleteAllCookies();
-                driver.manage().window().maximize();
 		driver.get(base_url);
 	}
 

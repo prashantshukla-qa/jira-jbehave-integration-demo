@@ -5,7 +5,7 @@
 package com.qait.automation.getpageobjects;
 
 import static com.qait.automation.getpageobjects.ObjectFileReader.getPageTitleFromFile;
-import static com.qait.automation.utils.ConfigPropertyReader.getProperty;
+import static com.qait.automation.samjbehavedemo.utils.ConfigPropertyReader.getProperty;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.qait.automation.utils.SeleniumWait;
+import com.qait.automation.samjbehavedemo.utils.SeleniumWait;
 
 /**
  *

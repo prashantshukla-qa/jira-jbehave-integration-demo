@@ -1,2 +1,2 @@
-# JBehave-JIRA-Integration-Demo
+# SAM-JBehave-JIRA-Demo
 Automation Demo - Integration JIRA with JBehave

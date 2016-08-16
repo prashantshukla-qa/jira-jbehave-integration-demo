@@ -1,6 +1,6 @@
 package com.qait.automation.getpageobjects;
 
-import static com.qait.automation.utils.ConfigPropertyReader.getProperty;
+import static com.qait.automation.samjbehavedemo.utils.ConfigPropertyReader.getProperty;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

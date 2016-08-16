@@ -3,10 +3,14 @@ Page Title: SAM - Log In
 #Object Definitions
 ====================================================================================
 
-inp_username    css #username
-inp_password    css #password
-btn_login       css #login
-txt_error   css #error
+inp_username    css #ctl00__mainConentPlaceholder_tbUserName
+inp_password    css #ctl00__mainConentPlaceholder_tbPassword
+btn_login      css #ctl00__mainConentPlaceholder_btnLogin
+
+btn_studentView	css	#btnStudentView
+
+lnk_dropbox	xpath	//*[@id="topNav"]/div/ul/li[3]/a
+lbl_dropbox     css     label.DropboxLabel
 ====================================================================================
 
 @all, browsers
