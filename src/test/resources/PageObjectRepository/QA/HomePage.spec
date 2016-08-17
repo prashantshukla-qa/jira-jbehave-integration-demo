@@ -1,15 +1,14 @@
-Page Title: Alexander Street
+Page Title: Publisher of streaming video, audio, and text library databases that promote research, teaching, and learning across disciplines, including music, counseling, history, business and more| Alexander Street
 
 #Object Definitions
 ====================================================================================
-lnk_signIn				css		a[title="Please sign in to save your clips and playlists"]
-lnk_hideNav				css		a[data-hide="Hide navigation"]
-lnk_showNav				css		a[data-show="Search all content"]
-inpt_searchBasic		css		input[name=searchstring]
-btn_goSearch			css		button[id=search_go]
-lnk_advancedSearch		css		a[id=advanced_search_link]
-lnk_disciplines			css		a[id=main-menu-item-1]
-lst_disciplines			css		a[id=main-menu-item-1]+ul
-lnk_artDesign			css		a[href="/art-design"]
-lnk_artArchitecture		css		a[href="/art-architecture"]
+lnk_navbar				xpath		//div[@class="navbar-nav-header"]//a[text()="${text}"]
+lnk_menubar				xpath		//a[@id="nav-$" and contains(@href,'%')]
+modal_requestTrial		xpath		//div[@aria-labelledby="myModalLabel"]
+iframe_requestTrial		xpath		//div[@aria-labelledby="myModalLabel" and @style='display: block;']//iframe
+inpt_requestTrial		xpath		//form[@id='pardot-form']//label[text()='${label}']/following-sibling::input
+drpdwn_requestTrial		xpath		//form[@id='pardot-form']//label[text()='${label}']/following-sibling::select
+btn_closeDialog			xpath		//div[contains(@style,'display: block;')]//button[contains(@class,'close')]
+modal_search			xpath		//div[@aria-labelledby="global-search-modal"]
+inpt_search				xpath		//div[@aria-labelledby="global-search-modal"]//input[@placeholder="Enter your keywords"]
 ====================================================================================

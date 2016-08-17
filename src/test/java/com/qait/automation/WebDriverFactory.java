@@ -75,6 +75,7 @@ public class WebDriverFactory {
     private static WebDriver getChromeDriver(String driverpath) {
         System.setProperty("webdriver.chrome.driver", driverpath);
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("chrome.switches","--disable-extensions");
         DesiredCapabilities cap = DesiredCapabilities.chrome();
         cap.setCapability(ChromeOptions.CAPABILITY, options);
         return new ChromeDriver(cap);

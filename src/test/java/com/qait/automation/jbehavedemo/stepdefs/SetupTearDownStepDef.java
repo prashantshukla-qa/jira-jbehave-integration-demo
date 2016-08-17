@@ -1,24 +1,20 @@
 package com.qait.automation.jbehavedemo.stepdefs;
 
-import org.jbehave.core.annotations.AfterStories;
-import org.jbehave.core.annotations.BeforeStories;
+import static com.qait.automation.utils.YamlReader.getData;
+
+import org.jbehave.core.annotations.BeforeStory;
 
 import com.qait.automation.TestSessionInitiator;
 
 public class SetupTearDownStepDef {
 
-	TestSessionInitiator test;
+	static TestSessionInitiator test = null;
 
-	@BeforeStories
+	@BeforeStory
 	public void setup() {
 		if (test == null) {
 			test = new TestSessionInitiator();
+			test.launchApplication(getData("app_url"));
 		}
-	}
-	
-	@AfterStories
-	public void tearDown(){
-		test = null;
-	}
-	
+	}	
 }

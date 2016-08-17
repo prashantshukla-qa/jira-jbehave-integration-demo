@@ -79,6 +79,21 @@ public class GetPage extends BaseUi {
         return elem;
     }
 
+    protected WebElement element(String elementToken, String replacement, String replacement1)
+            throws NoSuchElementException {
+        WebElement elem = null;
+        try {
+            elem = wait.waitForElementToBeVisible(webdriver
+                    .findElement(getLocator(elementToken, replacement, replacement1)));
+        } catch (NoSuchElementException excp) {
+            fail("FAILED: Element " + elementToken + " not found on the " + this.pageName + " !!!");
+        }
+        catch (NullPointerException npe){
+            
+        }
+        return elem;
+    }
+
     protected List<WebElement> elements(String elementToken, String replacement) {
         return wait.waitForElementsToBeVisible(webdriver.findElements(getLocator(
                 elementToken, replacement)));
@@ -149,6 +164,7 @@ public class GetPage extends BaseUi {
     protected By getLocator(String elementToken, String replacement) {
         String[] locator = getELementFromFile(this.pageName, elementToken);
         locator[2] = locator[2].replaceAll("\\$\\{.+\\}", replacement);
+//        System.out.println(locator[2]);
         return getBy(locator[1].trim(), locator[2].trim());
     }
 

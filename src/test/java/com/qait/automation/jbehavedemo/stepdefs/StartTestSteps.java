@@ -1,8 +1,5 @@
 package com.qait.automation.jbehavedemo.stepdefs;
 
-import static com.qait.automation.utils.YamlReader.getData;
-
-import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
@@ -13,46 +10,40 @@ public class StartTestSteps extends SetupTearDownStepDef {
 
 	@BeforeScenario
 	public void beforeIHaveLaunchedTheApplication() {
-		test.launchApplication(getData("app_url"));
 	}
 
 	@Given("I am on home page")
-	public void givenIamOnHomePage() {
+	public void givenIamOnHomePage(){
 		test.homepage.verifyUserIsOnHomePage();
 	}
-
-	@When("I click on Sign In link")
-	public void whenIClickOnSignInLink() {
-		test.homepage.clickSignInLink();
+	
+	@Then("I can see page title as $title")
+	public void thenICanSeePageTitle(@Named("title") String title){
+		test.homepage.verifyPageTitle(title);
 	}
 
-	@Then("I am navigated to home page")
-	public void thenIamNavigatedToHomePage() {
-		test.homepage.verifyUserIsOnHomePage();
-	}
-
-	@When("I click on $link link to show menu")
-	public void whenIClickOnLinkToShowMenu(){
-	test.homepage.clickOnLinkToShowMenu();	
+	@Then("I can see $link in the $category section")
+	public void thenICanSeeLinkInTheCategorySection(@Named("link") String link, @Named("category") String category){
+		test.homepage.verifyLinksInMenu(link, category);
 	}
 	
-	@When("I type $searchText in Search field to perform Basic Search")
-	public void whenITypeInSearchField(@Named("searchText") String searchText){
-		test.homepage.typeSearchTextToSearchResults(searchText);
+	@When("I click on $button button")
+	public void whenIClickOnRequestATrailButton(@Named("button")String button){
+		test.homepage.clickOnRequestATrialButton(button);
 	}
 	
-	@When("I click Search button")
-	public void whenIClickSearchButton(){
-		test.homepage.clickSearchButton();
+	@When("I type $label as $value")
+	public void whenITypeLabelAsValue(@Named("label")String label, @Named("value")String value){
+		test.homepage.fillValueIntoFormToRequestATrial(label, value);
 	}
-
-	/*
-	 * @Given("I close the application") public void givenICloseTheApplication()
-	 * { this.test.closeTestSession(); }
-	 */
-
-	@AfterStories
-	public void quitBrowserSession() {
-		test.closeTestSession();
+	
+	@When("I select $label as $value")
+	public void whenISelectLabelAsValue(@Named("label")String label, @Named("value")String value){
+		test.homepage.selectValueInFormToRequestATrial(label, value);
 	}
+	
+//	@AfterScenario
+//	public void quitBrowserSession() {
+//		test.closeTestSession();
+//	}
 }

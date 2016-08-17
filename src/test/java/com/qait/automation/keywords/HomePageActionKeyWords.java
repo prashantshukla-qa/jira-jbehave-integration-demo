@@ -1,5 +1,7 @@
 package com.qait.automation.keywords;
 
+import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
 import com.qait.automation.getpageobjects.GetPage;
@@ -11,33 +13,49 @@ import com.qait.automation.getpageobjects.GetPage;
 public class HomePageActionKeyWords extends GetPage {
 
 	public HomePageActionKeyWords(WebDriver driver) {
-		super(driver, "LoginPage");
+		super(driver, "HomePage");
 	}
 
 	public void verifyUserIsOnHomePage() {
-		verifyPageTitleExact("Alexander Street");
+		verifyPageTitleContains();
+		logMessage("verifying if the user is on the home page");
 	}
 
-	public void clickSignInLink() {
-		element("lnk_signIn").click();
-		logMessage("Clicked on Sign In");
+	public void verifyLinksInMenu(String link, String category) {
+		String changedLink = link;
+		String verifyingLink = link;
+		if (link.equals("Library"))
+			verifyingLink = "libraries";
+		if (link.equals("About Us"))
+			changedLink = "about-us";
+		String text = element("lnk_menubar", category, changedLink.toLowerCase()).getText();
+		logMessage("verifying if the link text for " + verifyingLink + " is correct on the home page");
+		Assert.assertEquals(verifyingLink + " link text visible to the user is incorrect", verifyingLink.toUpperCase(), text);
 	}
 
-	public void clickOnLinkToShowMenu() {
-		if (element("lnk_hideNav").getText().equals("HIDE CONTENT")) {
-			element("lnk_showNav").click();
-		} else {
-			logMessage("Search All Content menu is already visible");
-		}
+	public void verifyPageTitle(String title) {
+		verifyPageTitleExact(title);
+		logMessage("verifying if the page title \"" + title + "\" is correct on the home page");
 	}
 	
-	public void typeSearchTextToSearchResults(String searchText){
-		element("inpt_searchBasic").sendKeys(searchText);
-		logMessage("Typed "+searchText+" in basic search field");
+	public void clickOnRequestATrialButton(String button){
+		element("lnk_navbar", button).click();
+		logMessage("Clicked "+button+" to launch form");
 	}
 
-	public void clickSearchButton() {
-		element("btn_goSearch").click();
+	public void fillValueIntoFormToRequestATrial(String label, String value) {
+		switchToDefaultContent();
+		switchToFrame(element("iframe_requestTrial"));
+		element("inpt_requestTrial",label).sendKeys(value);
+		logMessage("Typed "+label+" as "+value+" in request a trial form");
+		switchToDefaultContent();
 	}
 
+	public void selectValueInFormToRequestATrial(String label, String value) {
+		switchToDefaultContent();
+		switchToFrame(element("iframe_requestTrial"));
+		selectProvidedTextFromDropDown(element("drpdwn_requestTrial",label), value);
+		logMessage("Selected "+label+" as "+value+" in request a trial form");
+		switchToDefaultContent();
+	}
 }

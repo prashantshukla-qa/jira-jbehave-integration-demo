@@ -147,18 +147,18 @@ public class PublishJiraReport {
 
         if (getstoryStatus(_storystatus.values()).equalsIgnoreCase(PENDING)) {
             System.out.println("NO JIRA ACTION");
-            getChangeAssigneeJson("automation-script");
+//            getChangeAssigneeJson("automation-script");
             return "";
         } else if (getstoryStatus(_storystatus.values()).equalsIgnoreCase(FAIL)) {
 
             try {
                 response = new HttpClient().postHttpResponse(jiratransitionurl,
-                        getReopenJiraTicketJson()).getEntity(String.class);
+                        getFailedJiraTicketJson()).getEntity(String.class);
 
-                getChangeAssigneeJson("rohitsingh");
+                getChangeAssigneeJson("automation-script");
             } catch (UniformInterfaceException e) {
             	//e.printStackTrace();
-                getChangeAssigneeJson("rohitsingh");
+                getChangeAssigneeJson("automation-script");
             }
             System.out.println("\nREOPENING JIRA TICKET:- " + _jiraStoryId
                     + "\n");
@@ -211,11 +211,11 @@ public class PublishJiraReport {
     }
 
     private String getCloseTicketJson() {
-        return "{ \"transition\": { \"id\": \"31\" }}";
+        return "{ \"transition\": { \"id\": \"731\" }}";
     }
 
-    private String getReopenJiraTicketJson() {
-        return "{ \"transition\": { \"id\": \"11\" }}";
+    private String getFailedJiraTicketJson() {
+        return "{ \"transition\": { \"id\": \"761\" }}";
 
     }
 

@@ -57,22 +57,18 @@ public class StoryTest extends JUnitStories {
 
 	public StoryTest() {
 
-		if (System.getProperty("useJira").equals("yes")) {
-			FileHandler.cleanStoryLocation();
-		}
-		if (System.getProperty("useJira").equals("yes")) {
-			if (System.getProperty("storyId") != null) {
-				new JiraStoryDownloader(System.getProperty("storyId")).storeJiraStoryLocally();
-			} else {
+		FileHandler.cleanStoryLocation();
+		if (System.getProperty("storyId") != null) {
+			new JiraStoryDownloader(System.getProperty("storyId")).storeJiraStoryLocally();
+		} else {
 
-				JiraSprintStoryFinder sprintStories = new JiraSprintStoryFinder(getProperty("rapidViewId"));
+			JiraSprintStoryFinder sprintStories = new JiraSprintStoryFinder(getProperty("rapidViewId"));
 
-				sprintStories.getJiraSprintStories().stream().map((sprintStory) -> {
-					return sprintStory;
-				}).map((sprintStory) -> new JiraStoryDownloader(sprintStory)).forEach((jirastory) -> {
-					jirastory.storeJiraStoryLocally();
-				});
-			}
+			sprintStories.getJiraSprintStories().stream().map((sprintStory) -> {
+				return sprintStory;
+			}).map((sprintStory) -> new JiraStoryDownloader(sprintStory)).forEach((jirastory) -> {
+				jirastory.storeJiraStoryLocally();
+			});
 		}
 		configuredEmbedder().embedderControls().doGenerateViewAfterStories(true).doIgnoreFailureInStories(true)
 				.doIgnoreFailureInView(true).useThreads(1).useStoryTimeoutInSecs(180);
@@ -117,7 +113,7 @@ public class StoryTest extends JUnitStories {
 
 	@Override
 	public InjectableStepsFactory stepsFactory() {
-		return new InstanceStepsFactory(configuration(), new StartTestSteps(), new PageStepDef());
+		return new InstanceStepsFactory(configuration(), new StartTestSteps());
 	}
 
 	@Override

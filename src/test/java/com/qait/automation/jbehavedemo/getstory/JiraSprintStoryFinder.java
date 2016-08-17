@@ -21,6 +21,7 @@ public class JiraSprintStoryFinder {
 
     public JiraSprintStoryFinder(String rapidViewId) {
         this.rapidViewPath = Constants.JIRA_URL + Constants.JIRA_PATH_RAPIDVIEW + rapidViewId;
+        System.out.println(this.rapidViewPath);
     }
 
     public List<String> getJiraSprintStories() {
