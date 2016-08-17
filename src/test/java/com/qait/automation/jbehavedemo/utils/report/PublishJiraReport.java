@@ -181,10 +181,8 @@ public class PublishJiraReport {
     }
 
     private String getstoryStatus(Collection<String> storyvalues) {
-        System.out.println("Story Map ".toUpperCase() + storyvalues);
         String returnValue = PASS;
         for (String value : storyvalues) {
-            System.out.println("VALUE - " + value);
             if (value.equalsIgnoreCase(FAIL)) {
                 return FAIL;
             } else if (value.equalsIgnoreCase(PENDING)) {
