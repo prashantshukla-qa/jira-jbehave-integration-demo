@@ -14,7 +14,7 @@ public class SearchResultsPageActionKeyWords extends GetPage {
 		super(driver, "LoginPage");
 	}
 
-	public void verifyUserIsOnHomePage() {
+	public void verifyUserIsOnSearchResultsPage() {
 		verifyPageTitleExact("Alexander Street");
 	}
 
