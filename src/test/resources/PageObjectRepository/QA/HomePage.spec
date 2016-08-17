@@ -5,7 +5,7 @@ Page Title: Publisher of streaming video, audio, and text library databases that
 lnk_navbar				xpath		//div[@class="navbar-nav-header"]//a[text()="${text}"]
 lnk_menubar				xpath		//a[@id="nav-$" and contains(@href,'%')]
 modal_requestTrial		xpath		//div[@aria-labelledby="myModalLabel"]
-iframe_requestTrial		xpath		//div[@aria-labelledby="myModalLabel" and @style='display: block;']//iframe
+iframe_requestTrial		css		#request-form > div > div > div > div > iframe
 inpt_requestTrial		xpath		//form[@id='pardot-form']//label[text()='${label}']/following-sibling::input
 drpdwn_requestTrial		xpath		//form[@id='pardot-form']//label[text()='${label}']/following-sibling::select
 btn_closeDialog			xpath		//div[contains(@style,'display: block;')]//button[contains(@class,'close')]
