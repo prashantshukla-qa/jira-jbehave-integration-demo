@@ -1,4 +1,4 @@
-Feature: Reaquest A Trial
+Feature: Request A Trial
 
 Scenario: As a user, I want to request a trial
 Given I am on home page
@@ -13,3 +13,4 @@ And I select Institution Type as Media
 And I select Country as India
 And I select State as AK
 And I select Subject Interest as Business
+And I click close button to close dialog

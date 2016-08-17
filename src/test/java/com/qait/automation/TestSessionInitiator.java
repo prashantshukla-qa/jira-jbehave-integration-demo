@@ -13,6 +13,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import com.qait.automation.keywords.HomePageActionKeyWords;
 import com.qait.automation.keywords.LoginPageActionKeyWords;
+import com.qait.automation.keywords.SearchResultsPageActionKeyWords;
 import com.qait.automation.utils.TakeScreenshot;
 
 public class TestSessionInitiator {
@@ -35,6 +36,7 @@ public class TestSessionInitiator {
 	 */
 	public LoginPageActionKeyWords loginpage;
 	public HomePageActionKeyWords homepage;
+	public SearchResultsPageActionKeyWords searchpage;
 
 	public TakeScreenshot takescreenshot;
 
@@ -45,6 +47,7 @@ public class TestSessionInitiator {
 	private void _initPage() {
 		loginpage = new LoginPageActionKeyWords(driver);
 		homepage = new HomePageActionKeyWords(driver);
+		searchpage = new SearchResultsPageActionKeyWords(driver);
 	}
 
 	/**

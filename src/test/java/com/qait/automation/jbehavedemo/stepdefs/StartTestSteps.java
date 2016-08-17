@@ -42,6 +42,41 @@ public class StartTestSteps extends SetupTearDownStepDef {
 		test.homepage.selectValueInFormToRequestATrial(label, value);
 	}
 	
+	@When("I click close button to close dialog")
+	public void whenIClickCloseButtonToCloseDialog(){
+		test.homepage.closeDialogWindow();
+	}
+	
+	@When("I click Search icon")
+	public void whenIClickSearchIcon(){
+		test.homepage.clickSearchIcon();
+	}
+	
+	@When("I type $text into Enter your Keywords field")
+	public void whenITypeTextIntoEnterYourKeywordsFiled(@Named("text")String text){
+		test.homepage.typeSearchTextIntoSearchField(text);
+	}
+	
+	@When("I select $option radio button to specify search criteria")
+	public void whenISelectOptionRadioButtonToSpecifySearchCriteria(@Named("option")String option){
+		test.homepage.selectRadioButtonToSpecifySearchType(option);
+	}
+	
+	@When("I click Search button to perform search")
+	public void whenIClickSearchButtonToPerformSearch(){
+		test.homepage.performSearch();
+	}
+	
+	@Then("I am navigated to Search Results page")
+	public void thenIAmNavigatedToSearchResultsPage(){
+		test.searchpage.verifyUserIsOnSearchResultsPage();
+	}
+	
+	@Then("I can see $resultCount search results")
+	public void thenIcanSeeResultCountSearchResults(@Named("resultCount")String resultCount){
+		test.searchpage.verfiySearchResults(resultCount);
+	}
+	
 //	@AfterScenario
 //	public void quitBrowserSession() {
 //		test.closeTestSession();

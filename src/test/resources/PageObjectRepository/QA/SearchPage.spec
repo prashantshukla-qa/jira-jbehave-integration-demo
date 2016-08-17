@@ -1,6 +1,6 @@
-Page Title: Alexander Street
+Page Title: Search | Alexander Street
 
 #Object Definitions
 ====================================================================================
-txt_resultsSearch	css		span[class=total-result]
+txt_resultsSearch	xpath		//div[@class="search-results-count"]/h1
 ====================================================================================

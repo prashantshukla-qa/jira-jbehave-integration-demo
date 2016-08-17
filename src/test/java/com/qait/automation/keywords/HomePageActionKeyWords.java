@@ -30,7 +30,7 @@ public class HomePageActionKeyWords extends GetPage {
 			changedLink = "about-us";
 		String text = element("lnk_menubar", category, changedLink.toLowerCase()).getText();
 		logMessage("verifying if the link text for " + verifyingLink + " is correct on the home page");
-		Assert.assertEquals(verifyingLink + " link text visible to the user is incorrect", verifyingLink.toUpperCase(), text);
+		Assert.assertEquals(verifyingLink + " link text visible to the user is incorrect", text, verifyingLink.toUpperCase());
 	}
 
 	public void verifyPageTitle(String title) {
@@ -57,5 +57,31 @@ public class HomePageActionKeyWords extends GetPage {
 		selectProvidedTextFromDropDown(element("drpdwn_requestTrial",label), value);
 		logMessage("Selected "+label+" as "+value+" in request a trial form");
 		switchToDefaultContent();
+	}
+	
+	public void closeDialogWindow(){
+		element("btn_closeDialog").click();
+		logMessage("Clicked close button to close dialog");
+		wait.hardWait(3);
+	}
+	
+	public void clickSearchIcon(){
+		element("icn_search").click();
+		logMessage("Clicked on Search icon to perform a search");
+	}
+
+	public void typeSearchTextIntoSearchField(String value) {		
+		element("inpt_search").sendKeys(value);
+		logMessage("Typed "+value+" to perform a search");
+	}
+
+	public void selectRadioButtonToSpecifySearchType(String value) {
+		element("inpt_radioSearchType",value).click();
+		logMessage("Selected "+value+" to fetch specific type of search results");
+	}
+	
+	public void performSearch(){
+		element("btn_search").click();
+		logMessage("Clicked Search button to perform a search on entered query text");
 	}
 }

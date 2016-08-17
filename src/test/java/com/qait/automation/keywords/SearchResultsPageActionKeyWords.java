@@ -16,15 +16,12 @@ public class SearchResultsPageActionKeyWords extends GetPage {
 	}
 
 	public void verifyUserIsOnSearchResultsPage() {
-		verifyPageTitleExact("Alexander Street");
+		verifyPageTitleExact();
 	}
-
-	public void verifySearchResultsFound(String noOfSearchResults) {
-		if (element("txt_resultsSearch").getText().equals(noOfSearchResults)) {
-			Assert.assertTrue(true);
-		} else {
-			Assert.assertTrue(false);
-		}
+	
+	public void verfiySearchResults(String resultsCount){
+		String valueResults = element("txt_resultsSearch").getText();
+		Assert.assertEquals("No of results found doesn't match",resultsCount ,valueResults.replace(" results found for \"Music\"", ""));
 	}
 
 }
