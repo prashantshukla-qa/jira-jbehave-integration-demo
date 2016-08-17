@@ -27,7 +27,7 @@ public class PublishJiraReport {
 
     private StoryXMLParser xml;
 
-    private Map<String, String> storyStatus = new LinkedHashMap<String, String>();
+    private Map<String, String> storyStatus;// = new LinkedHashMap<String, String>();
 
     public PublishJiraReport() {
     }
@@ -36,6 +36,8 @@ public class PublishJiraReport {
         xml = new StoryXMLParser(jiraStoryId);
         int scenarioCount = xml.getScenarioCount();
 
+        storyStatus = new LinkedHashMap<>();
+        
         String jsonResultText = "{ \"body\": \"";
         jsonResultText = jsonResultText + "**Test Resuls For :- " + jiraStoryId
                 + "**\\n\\n";
@@ -46,10 +48,10 @@ public class PublishJiraReport {
 
             Map<String, Integer> scenarioResult = xml
                     .getScenarioResult(scenarioElement);
-            System.out.println("RESULT for " + jiraStoryId +":- "+scenarioResult);
+            System.out.println("RESULT for " + jiraStoryId + ":- " + scenarioResult);
 
             if (scenarioResult.get(PENDING) == 0) {
-                
+
                 if (scenarioResult.get(FAIL) == 0) {
                     jsonResultText = jsonResultText + "{color:green}"
                             + scenarioTitle + " - *PASSED*" + "{color}"
@@ -80,7 +82,7 @@ public class PublishJiraReport {
                             FAIL);
                 }
 
-            } else if (scenarioResult.get(PENDING) > 0){
+            } else if (scenarioResult.get(PENDING) > 0) {
                 jsonResultText = jsonResultText + "{color:blue}" + scenarioTitle
                         + " - *PASSED*" + "{color}" + "\\n\\n";
 
@@ -104,7 +106,7 @@ public class PublishJiraReport {
             }
         }
         jsonResultText = jsonResultText + "\"}";
-        
+
         return jsonResultText;
     }
 
@@ -157,7 +159,7 @@ public class PublishJiraReport {
 
                 getChangeAssigneeJson("automation-script");
             } catch (UniformInterfaceException e) {
-            	//e.printStackTrace();
+                //e.printStackTrace();
                 getChangeAssigneeJson("automation-script");
             }
             System.out.println("\nREOPENING JIRA TICKET:- " + _jiraStoryId
@@ -169,7 +171,7 @@ public class PublishJiraReport {
                         getCloseTicketJson()).getEntity(String.class);
                 changeJiraAssignee(_jiraStoryId, "-1");
             } catch (UniformInterfaceException e) {
-            	//e.printStackTrace();
+                //e.printStackTrace();
             }
             System.out
                     .println("\nCLOSING JIRA TICKET:- " + _jiraStoryId + "\n");
@@ -179,8 +181,10 @@ public class PublishJiraReport {
     }
 
     private String getstoryStatus(Collection<String> storyvalues) {
+        System.out.println("Story Map ".toUpperCase() + storyvalues);
         String returnValue = PASS;
         for (String value : storyvalues) {
+            System.out.println("VALUE - " + value);
             if (value.equalsIgnoreCase(FAIL)) {
                 return FAIL;
             } else if (value.equalsIgnoreCase(PENDING)) {
@@ -201,7 +205,7 @@ public class PublishJiraReport {
                     .getEntity(String.class
                     );
         } catch (UniformInterfaceException e) {
-        	//e.printStackTrace();
+            e.printStackTrace();
         }
         return response;
     }

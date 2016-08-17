@@ -13,8 +13,8 @@ public class SetupTearDownStepDef {
 	@BeforeStory
 	public void setup() {
 		if (test == null) {
-			test = new TestSessionInitiator();
-			test.launchApplication(getData("app_url"));
+			//test = new TestSessionInitiator();
+			//test.launchApplication(getData("app_url"));
 		}
 	}	
 }
