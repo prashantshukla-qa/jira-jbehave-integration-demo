@@ -3,46 +3,56 @@ package com.qait.automation.jbehavedemo.stepdefs;
 import static com.qait.automation.utils.YamlReader.getData;
 
 import org.jbehave.core.annotations.AfterStories;
-import org.jbehave.core.annotations.BeforeStory;
+import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Named;
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-import com.qait.automation.TestSessionInitiator;
-import com.qait.automation.keywords.LoginPageActionKeyWords;
+public class StartTestSteps extends SetupTearDownStepDef {
 
-public class StartTestSteps {
+	@BeforeScenario
+	public void beforeIHaveLaunchedTheApplication() {
+		test.launchApplication(getData("app_url"));
+	}
 
-    TestSessionInitiator test;
-    LoginPageActionKeyWords loginpage;
-    public PageStepDef pagestep;
+	@Given("I am on home page")
+	public void givenIamOnHomePage() {
+		test.homepage.verifyUserIsOnHomePage();
+	}
 
-    public StartTestSteps(TestSessionInitiator test) {
-        this.test = test;
-        loginpage = new LoginPageActionKeyWords(test.getDriver());
-    }
+	@When("I click on Sign In link")
+	public void whenIClickOnSignInLink() {
+		test.homepage.clickSignInLink();
+	}
 
-    @BeforeStory
-    public void beforeIHaveLaunchedTheApplication() {
-        this.test.launchApplication(getData("app_url"));
-    }
+	@Then("I am navigated to home page")
+	public void thenIamNavigatedToHomePage() {
+		test.homepage.verifyUserIsOnHomePage();
+	}
 
-    @Given("I am on home page")
-    public void givenIamOnHomePage() {
-        this.test.launchApplication(getData("app_url"));
-    }
+	@When("I click on $link link to show menu")
+	public void whenIClickOnLinkToShowMenu(){
+	test.homepage.clickOnLinkToShowMenu();	
+	}
+	
+	@When("I type $searchText in Search field to perform Basic Search")
+	public void whenITypeInSearchField(@Named("searchText") String searchText){
+		test.homepage.typeSearchTextToSearchResults(searchText);
+	}
+	
+	@When("I click Search button")
+	public void whenIClickSearchButton(){
+		test.homepage.clickSearchButton();
+	}
 
-    @When("I click Sign In link")
-    public void whenIClickSignInLink(){
-    	this.test.homepage.clickSignInLink();
-    }
-    
-    /*@Given("I close the application")
-    public void givenICloseTheApplication() {
-        this.test.closeTestSession();
-    }*/
+	/*
+	 * @Given("I close the application") public void givenICloseTheApplication()
+	 * { this.test.closeTestSession(); }
+	 */
 
-    @AfterStories
-    public void quitBrowserSession() {
-        this.test.closeTestSession();
-    }
+	@AfterStories
+	public void quitBrowserSession() {
+		test.closeTestSession();
+	}
 }

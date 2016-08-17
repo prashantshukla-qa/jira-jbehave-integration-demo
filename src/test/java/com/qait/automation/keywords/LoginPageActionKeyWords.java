@@ -18,11 +18,15 @@ public class LoginPageActionKeyWords extends GetPage {
 		verifyPageTitleExact("User account | Alexander Street");
 	}
 	
-	public void loginToTheApplicationUsingCredentials(String username,
-			String password) {
-		element("inp_username").sendKeys(username);
-		element("inp_password").sendKeys(password);
+	public void enterUsernameToLogin(String username) {
+		element("inpt_username").sendKeys(username);
+	}
+	
+	public void enterPasswordToLogin(String password){
+		element("inpt_password").sendKeys(password);		
+	}
+	
+	public void clickLoginButton(){
 		element("btn_login").click();
-		handleAlert();
 	}
 }

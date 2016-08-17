@@ -60,21 +60,17 @@ public class TestSessionInitiator {
 	public void testInitiator() {
 		setYamlFilePath();
 		_configureBrowser();
-		//_initPage();
+		_initPage();
 	}
 
 	private void _configureBrowser() {
 		driver = wdfactory.getDriver(_getSessionConfig());
-		// driver.manage().window().maximize();
-		driver.manage()
-				.timeouts()
-				.implicitlyWait(Integer.parseInt(getProperty("timeout")),
-						TimeUnit.SECONDS);
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Integer.parseInt(getProperty("timeout")), TimeUnit.SECONDS);
 	}
 
 	private Map<String, String> _getSessionConfig() {
-		String[] configKeys = { "tier", "browser", "seleniumserver",
-				"seleniumserverhost", "timeout", "driverpath" };
+		String[] configKeys = { "tier", "browser", "seleniumserver", "seleniumserverhost", "timeout", "driverpath" };
 		Map<String, String> config = new HashMap<>();
 		for (String string : configKeys) {
 			config.put(string, getProperty("./Config.properties", string));
@@ -88,8 +84,7 @@ public class TestSessionInitiator {
 
 	public void launchApplication(String base_url) {
 		System.out.println("\nThe application url is :- " + base_url);
-		System.out.println("The test browser is :- "
-				+ _getSessionConfig().get("browser") + "\n");
+		System.out.println("The test browser is :- " + _getSessionConfig().get("browser") + "\n");
 		driver.manage().deleteAllCookies();
 		driver.get(base_url);
 	}
@@ -100,7 +95,7 @@ public class TestSessionInitiator {
 
 	public void closeBrowserSession() {
 		System.out.println("\n");
-		//driver.quit();
+		// driver.quit();
 		driver.close();
 	}
 

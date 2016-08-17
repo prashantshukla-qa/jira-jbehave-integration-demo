@@ -52,7 +52,6 @@ import org.jbehave.core.steps.ParameterConverters;
 public class StoryTest extends JUnitStories {
 
 	// private final String rapidViewId = "2";
-	TestSessionInitiator test;
 
 	private final CrossReference xref = new CrossReference();
 
@@ -118,9 +117,7 @@ public class StoryTest extends JUnitStories {
 
 	@Override
 	public InjectableStepsFactory stepsFactory() {
-		test = new TestSessionInitiator();
-
-		return new InstanceStepsFactory(configuration(), new StartTestSteps(test), new PageStepDef(test));
+		return new InstanceStepsFactory(configuration(), new StartTestSteps(), new PageStepDef());
 	}
 
 	@Override
