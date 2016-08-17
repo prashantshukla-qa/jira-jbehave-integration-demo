@@ -51,82 +51,82 @@ import org.jbehave.core.steps.ParameterConverters;
  */
 public class StoryTest extends JUnitStories {
 
-    //private final String rapidViewId = "2";
-    TestSessionInitiator test;
+	// private final String rapidViewId = "2";
+	TestSessionInitiator test;
 
-    private final CrossReference xref = new CrossReference();
+	private final CrossReference xref = new CrossReference();
 
-    public StoryTest() {
+	public StoryTest() {
 
-        FileHandler.cleanStoryLocation();
+		if (System.getProperty("useJira").equals("yes")) {
+			FileHandler.cleanStoryLocation();
+		}
+		if (System.getProperty("useJira").equals("yes")) {
+			if (System.getProperty("storyId") != null) {
+				new JiraStoryDownloader(System.getProperty("storyId")).storeJiraStoryLocally();
+			} else {
 
-        if (System.getProperty("storyId") != null) {
-            new JiraStoryDownloader(System.getProperty("storyId")).storeJiraStoryLocally();
-        } else {
+				JiraSprintStoryFinder sprintStories = new JiraSprintStoryFinder(getProperty("rapidViewId"));
 
-            JiraSprintStoryFinder sprintStories = new JiraSprintStoryFinder(getProperty("rapidViewId"));
+				sprintStories.getJiraSprintStories().stream().map((sprintStory) -> {
+					return sprintStory;
+				}).map((sprintStory) -> new JiraStoryDownloader(sprintStory)).forEach((jirastory) -> {
+					jirastory.storeJiraStoryLocally();
+				});
+			}
+		}
+		configuredEmbedder().embedderControls().doGenerateViewAfterStories(true).doIgnoreFailureInStories(true)
+				.doIgnoreFailureInView(true).useThreads(1).useStoryTimeoutInSecs(180);
+	}
 
-            sprintStories.getJiraSprintStories().stream().map((sprintStory) -> {
-                return sprintStory;
-            }).map((sprintStory) -> new JiraStoryDownloader(sprintStory)).forEach((jirastory) -> {
-                jirastory.storeJiraStoryLocally();
-            });
-        }
-        configuredEmbedder().embedderControls().doGenerateViewAfterStories(true).doIgnoreFailureInStories(true)
-                .doIgnoreFailureInView(true).useThreads(1).useStoryTimeoutInSecs(180);
-    }
+	@Override
+	public Configuration configuration() {
+		// return new MostUsefulConfiguration();
 
-    @Override
-    public Configuration configuration() {
-        //return new MostUsefulConfiguration();
+		Class<? extends Embeddable> embeddableClass = this.getClass();
+		Properties viewResources = new Properties();
+		viewResources.put("decorateNonHtml", "true");
+		ParameterConverters parameterConverters = new ParameterConverters();
+		ExamplesTableFactory examplesTableFactory = new ExamplesTableFactory(new LocalizedKeywords(),
+				new LoadFromClasspath(embeddableClass), parameterConverters);
+		// add custom converters
+		parameterConverters.addConverters(new ParameterConverters.DateConverter(new SimpleDateFormat("yyyy-MM-dd")),
+				new ParameterConverters.ExamplesTableConverter(examplesTableFactory));
 
-        Class<? extends Embeddable> embeddableClass = this.getClass();
-        Properties viewResources = new Properties();
-        viewResources.put("decorateNonHtml", "true");
-        ParameterConverters parameterConverters = new ParameterConverters();
-        ExamplesTableFactory examplesTableFactory = new ExamplesTableFactory(new LocalizedKeywords(),
-                new LoadFromClasspath(embeddableClass), parameterConverters);
-        // add custom converters
-        parameterConverters.addConverters(new ParameterConverters.DateConverter(new SimpleDateFormat("yyyy-MM-dd")),
-                new ParameterConverters.ExamplesTableConverter(examplesTableFactory));
+		URL storyURL = null;
+		try {
+			storyURL = new URL("file://" + System.getProperty("user.dir") + "/" + Constants.STORY_LOC);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 
-        URL storyURL = null;
-        try {
-            storyURL = new URL("file://" + System.getProperty("user.dir")
-                    + "/" + Constants.STORY_LOC);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+		return new MostUsefulConfiguration()
+				.useStoryControls(new StoryControls().doDryRun(false).doSkipScenariosAfterFailure(false))
+				.useStoryLoader(
+						new LoadFromRelativeFile(storyURL))
+				.useStoryParser(
+						new RegexStoryParser(
+								examplesTableFactory))
+				.useStoryPathResolver(new UnderscoredCamelCaseResolver())
+				.useStoryReporterBuilder(new StoryReporterBuilder()
+						.withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass)).withDefaultFormats()
+						.withPathResolver(new FilePrintStreamFactory.ResolveToPackagedName())
+						.withViewResources(viewResources).withFormats(Format.ANSI_CONSOLE, Format.XML)
+						.withFailureTrace(true).withFailureTraceCompression(true).withCrossReference(xref))
+				.useParameterConverters(parameterConverters).useStepMonitor(xref.getStepMonitor());
+	}
 
-        return new MostUsefulConfiguration()
-                .useStoryControls(new StoryControls().doDryRun(false).doSkipScenariosAfterFailure(false))
-                .useStoryLoader(new LoadFromRelativeFile(storyURL))
-                .useStoryParser(new RegexStoryParser(examplesTableFactory))
-                .useStoryPathResolver(new UnderscoredCamelCaseResolver())
-                .useStoryReporterBuilder(
-                        new StoryReporterBuilder()
-                        .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
-                        .withDefaultFormats().withPathResolver(new FilePrintStreamFactory.ResolveToPackagedName())
-                        .withViewResources(viewResources).withFormats(Format.ANSI_CONSOLE, Format.XML)
-                        .withFailureTrace(true).withFailureTraceCompression(true).withCrossReference(xref)
-                )
-                .useParameterConverters(parameterConverters)
-                .useStepMonitor(xref.getStepMonitor());
-    }
+	@Override
+	public InjectableStepsFactory stepsFactory() {
+		test = new TestSessionInitiator();
 
-    @Override
-    public InjectableStepsFactory stepsFactory() {
-        test = new TestSessionInitiator();
+		return new InstanceStepsFactory(configuration(), new StartTestSteps(test), new PageStepDef(test));
+	}
 
-        return new InstanceStepsFactory(configuration(), new StartTestSteps(test), new PageStepDef(test));
-    }
-
-    @Override
-    protected List<String> storyPaths() {
-        URL codeLocation = CodeLocations
-                .codeLocationFromPath(Constants.STORY_LOC);
-        List<String> paths = new StoryFinder().findPaths(codeLocation,
-                Arrays.asList("/*.story"), Arrays.asList(""));
-        return paths;
-    }
+	@Override
+	protected List<String> storyPaths() {
+		URL codeLocation = CodeLocations.codeLocationFromPath(Constants.STORY_LOC);
+		List<String> paths = new StoryFinder().findPaths(codeLocation, Arrays.asList("/*.story"), Arrays.asList(""));
+		return paths;
+	}
 }

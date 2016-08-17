@@ -1,30 +1,8 @@
-Page Title: SAM - Log In
+Page Title: User account | Alexander Street
 
 #Object Definitions
 ====================================================================================
-
-inp_username    css #ctl00__mainConentPlaceholder_tbUserName
-inp_password    css #ctl00__mainConentPlaceholder_tbPassword
-btn_login      css #ctl00__mainConentPlaceholder_btnLogin
-
-btn_studentView	css	#btnStudentView
-
-lnk_dropbox	xpath	//*[@id="topNav"]/div/ul/li[3]/a
-lbl_dropbox     css     label.DropboxLabel
+inpt_username		css		input[id=edit-name]
+inpt_password		css		input[id=edit-pass]
+btn_login			css		button[value="Log in"]
 ====================================================================================
-
-@all, browsers
---------------------------------
-inp_password
-    below: inp_username 10 px
-    hover: css 
-
-@all
---------------------------------
-inp_password
-    above: inp_username 10 px
-
-@browser
---------------------------------
-inp_password
-    below: inp_username > 10 px

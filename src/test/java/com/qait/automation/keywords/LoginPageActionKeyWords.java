@@ -15,11 +15,7 @@ public class LoginPageActionKeyWords extends GetPage {
 	}
 
 	public void verifyUserIsOnLoginPage() {
-		verifyPageTitleExact("SAM - Log In");
-	}
-
-	public void verifyUserIsOnHomePage() {
-		verifyPageTitleExact("Home");
+		verifyPageTitleExact("User account | Alexander Street");
 	}
 	
 	public void loginToTheApplicationUsingCredentials(String username,

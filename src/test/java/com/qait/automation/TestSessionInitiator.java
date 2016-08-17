@@ -1,9 +1,6 @@
 package com.qait.automation;
 
 import static com.qait.automation.utils.ConfigPropertyReader.getProperty;
-
-import com.qait.automation.keywords.LoginPageActionKeyWords;
-import com.qait.automation.utils.TakeScreenshot;
 import static com.qait.automation.utils.YamlReader.getYamlValue;
 import static com.qait.automation.utils.YamlReader.setYamlFilePath;
 
@@ -13,6 +10,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+
+import com.qait.automation.keywords.HomePageActionKeyWords;
+import com.qait.automation.keywords.LoginPageActionKeyWords;
+import com.qait.automation.utils.TakeScreenshot;
 
 public class TestSessionInitiator {
 
@@ -33,6 +34,7 @@ public class TestSessionInitiator {
 	 * Initiating the page objects
 	 */
 	public LoginPageActionKeyWords loginpage;
+	public HomePageActionKeyWords homepage;
 
 	public TakeScreenshot takescreenshot;
 
@@ -40,9 +42,10 @@ public class TestSessionInitiator {
 		return this.driver;
 	}
 
-//	private void _initPage() {
-//		loginpage = new LoginPageActions(driver);
-//	}
+	private void _initPage() {
+		loginpage = new LoginPageActionKeyWords(driver);
+		homepage = new HomePageActionKeyWords(driver);
+	}
 
 	/**
 	 * Page object Initiation done
