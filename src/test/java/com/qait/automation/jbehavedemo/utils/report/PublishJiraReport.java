@@ -25,200 +25,176 @@ import static com.qait.automation.utils.TestStates.*;
  */
 public class PublishJiraReport {
 
-    private StoryXMLParser xml;
+	private StoryXMLParser xml;
 
-    private Map<String, String> storyStatus;// = new LinkedHashMap<String, String>();
+	private Map<String, String> storyStatus;// = new LinkedHashMap<String,
+											// String>();
 
-    public PublishJiraReport() {
-    }
+	public PublishJiraReport() {
+	}
 
-    public String createJiraCommentJson(String jiraStoryId) {
-        xml = new StoryXMLParser(jiraStoryId);
-        int scenarioCount = xml.getScenarioCount();
+	public String createJiraCommentJson(String jiraStoryId) {
+		xml = new StoryXMLParser(jiraStoryId);
+		int scenarioCount = xml.getScenarioCount();
 
-        storyStatus = new LinkedHashMap<>();
-        
-        String jsonResultText = "{ \"body\": \"";
-        jsonResultText = jsonResultText + "**Test Resuls For :- " + jiraStoryId
-                + "**\\n\\n";
+		storyStatus = new LinkedHashMap<>();
 
-        for (int i = 0; i < scenarioCount; i++) {
-            Element scenarioElement = xml.getScenario(i);
-            String scenarioTitle = scenarioElement.getAttribute("title");
+		String jsonResultText = "{ \"body\": \"";
+		jsonResultText = jsonResultText + "**Test Resuls For :- " + jiraStoryId + "**\\n\\n";
 
-            Map<String, Integer> scenarioResult = xml
-                    .getScenarioResult(scenarioElement);
-            System.out.println("RESULT for " + jiraStoryId + ":- " + scenarioResult);
+		for (int i = 0; i < scenarioCount; i++) {
+			Element scenarioElement = xml.getScenario(i);
+			String scenarioTitle = scenarioElement.getAttribute("title");
 
-            if (scenarioResult.get(PENDING) == 0) {
+			Map<String, Integer> scenarioResult = xml.getScenarioResult(scenarioElement);
+			System.out.println("RESULT for " + jiraStoryId + ":- " + scenarioResult);
 
-                if (scenarioResult.get(FAIL) == 0) {
-                    jsonResultText = jsonResultText + "{color:green}"
-                            + scenarioTitle + " - *PASSED*" + "{color}"
-                            + "\\n\\n";
-                    this.storyStatus.put(jiraStoryId + ":" + "Scenario " + i,
-                            PASS);
-                } else if (scenarioResult.get(FAIL) > 0) {
-                    jsonResultText = jsonResultText + "{color:red}"
-                            + scenarioTitle + " - *Failed*" + "{color}"
-                            + "\\n\\n";
+			if (scenarioResult.get(PENDING) == 0) {
 
-                    for (String step : xml.getStepResults(scenarioElement)
-                            .values()) {
+				if (scenarioResult.get(FAIL) == 0) {
+					jsonResultText = jsonResultText + "{color:green}" + scenarioTitle + " - *PASSED*" + "{color}"
+							+ "\\n\\n";
+					this.storyStatus.put(jiraStoryId + ":" + "Scenario " + i, PASS);
+				} else if (scenarioResult.get(FAIL) > 0) {
+					jsonResultText = jsonResultText + "{color:red}" + scenarioTitle + " - *Failed*" + "{color}"
+							+ "\\n\\n";
 
-                        if (step.endsWith("- SUCCESSFUL")) {
-                            jsonResultText = jsonResultText
-                                    + "\\n{color:green}" + step + "{color}"
-                                    + "\\n";
-                        } else if (step.endsWith("- FAILED")) {
-                            jsonResultText = jsonResultText + "\\t{color:red}"
-                                    + step + "{color}" + "\\n";
-                        } else if (step.endsWith("- NOTPERFORMED")) {
-                            jsonResultText = jsonResultText + "\\n{color:blue}"
-                                    + step + "{color}" + "\\n";
-                        }
-                    }
-                    this.storyStatus.put(jiraStoryId + ":" + "Scenario " + i,
-                            FAIL);
-                }
+					for (String step : xml.getStepResults(scenarioElement).values()) {
 
-            } else if (scenarioResult.get(PENDING) > 0) {
-                jsonResultText = jsonResultText + "{color:blue}" + scenarioTitle
-                        + " - *PASSED*" + "{color}" + "\\n\\n";
+						if (step.endsWith("- SUCCESSFUL")) {
+							jsonResultText = jsonResultText + "\\n{color:green}" + step + "{color}" + "\\n";
+						} else if (step.endsWith("- FAILED")) {
+							jsonResultText = jsonResultText + "\\t{color:red}" + step + "{color}" + "\\n";
+						} else if (step.endsWith("- NOTPERFORMED")) {
+							jsonResultText = jsonResultText + "\\n{color:blue}" + step + "{color}" + "\\n";
+						}
+					}
+					this.storyStatus.put(jiraStoryId + ":" + "Scenario " + i, FAIL);
+				}
 
-                for (String step : xml.getStepResults(scenarioElement).values()) {
+			} else if (scenarioResult.get(PENDING) > 0) {
+				jsonResultText = jsonResultText + "{color:blue}" + scenarioTitle + " - *PASSED*" + "{color}" + "\\n\\n";
 
-                    if (step.endsWith("- SUCCESSFUL")) {
-                        jsonResultText = jsonResultText + "\\t{color:green}" + step
-                                + "{color}" + "\\n";
-                    } else if (step.endsWith("- FAILED")) {
-                        jsonResultText = jsonResultText + "\\t{color:red}" + step
-                                + "{color}" + "\\n";
-                    } else if (step.endsWith("- NOTPERFORMED")) {
-                        jsonResultText = jsonResultText + "\\t{color:blue}" + step
-                                + "{color}" + "\\n";
-                    } else if (step.endsWith("- PENDING")) {
-                        jsonResultText = jsonResultText + "\\t{color:blue}" + step
-                                + "{color}" + "\\n";
-                    }
-                }
-                this.storyStatus.put(jiraStoryId + ":" + "Scenario " + i, PENDING);
-            }
-        }
-        jsonResultText = jsonResultText + "\"}";
+				for (String step : xml.getStepResults(scenarioElement).values()) {
 
-        return jsonResultText;
-    }
+					if (step.endsWith("- SUCCESSFUL")) {
+						jsonResultText = jsonResultText + "\\t{color:green}" + step + "{color}" + "\\n";
+					} else if (step.endsWith("- FAILED")) {
+						jsonResultText = jsonResultText + "\\t{color:red}" + step + "{color}" + "\\n";
+					} else if (step.endsWith("- NOTPERFORMED")) {
+						jsonResultText = jsonResultText + "\\t{color:blue}" + step + "{color}" + "\\n";
+					} else if (step.endsWith("- PENDING")) {
+						jsonResultText = jsonResultText + "\\t{color:blue}" + step + "{color}" + "\\n";
+					}
+				}
+				this.storyStatus.put(jiraStoryId + ":" + "Scenario " + i, PENDING);
+			}
+		}
+		jsonResultText = jsonResultText + "\"}";
 
-    public String pushJiraComment() {
-        String response = "";
-        HttpClient client = new HttpClient();
-        for (String storyFilename : FileHandler.getFileNames(
-                Constants.STORY_LOC, ".story")) {
+		return jsonResultText;
+	}
 
-            String jiraStoryId = storyFilename.split(".story")[0];
-            String jiracommenturl = Constants.JIRA_URL + Constants.JIRA_ISSUE
-                    + jiraStoryId + "/" + Constants.JIRA_COMMENT;
+	public String pushJiraComment() {
+		String response = "";
+		HttpClient client = new HttpClient();
+		for (String storyFilename : FileHandler.getFileNames(Constants.STORY_LOC, ".story")) {
 
-            // update JIRA only if execEnv is QA
-            if (System.getProperty("execEnv", "dev").equalsIgnoreCase("qa")) {
+			String jiraStoryId = storyFilename.split(".story")[0];
+			String jiracommenturl = Constants.JIRA_URL + Constants.JIRA_ISSUE + jiraStoryId + "/"
+					+ Constants.JIRA_COMMENT;
 
-                response = response
-                        + client.postHttpResponse(jiracommenturl,
-                                this.createJiraCommentJson(jiraStoryId))
-                        .getEntity(String.class) + "\n";
-                moveJiraTicket(jiraStoryId, this.storyStatus);
-            } else {
-                System.out
-                        .println("=================================================");
-                System.out
-                        .println("NOT UPDATING THE JIRA TICKET AS execEnv IS NOT QA");
-                System.out
-                        .println("=================================================");
-            }
-        }
-        return response;
-    }
+			// update JIRA only if execEnv is QA
+			if (System.getProperty("execEnv", "dev").equalsIgnoreCase("qa")) {
 
-    private String moveJiraTicket(String _jiraStoryId,
-            Map<String, String> _storystatus) {
-        String response = "";
+//				System.out.println(this.createJiraCommentJson(jiraStoryId));
+				response = response + client.postHttpResponse(jiracommenturl, this.createJiraCommentJson(jiraStoryId))
+						.getEntity(String.class) + "\n";
+//				System.out.println(response);
+				moveJiraTicket(jiraStoryId, this.storyStatus);
+			} else {
+				System.out.println("=================================================");
+				System.out.println("NOT UPDATING THE JIRA TICKET AS execEnv IS NOT QA");
+				System.out.println("=================================================");
+			}
+		}
+		return response;
+	}
 
-        String jiratransitionurl = Constants.JIRA_URL + Constants.JIRA_ISSUE
-                + _jiraStoryId + "/" + Constants.JIRA_TRANSITION;
+	private String moveJiraTicket(String _jiraStoryId, Map<String, String> _storystatus) {
+		String response = "";
 
-        if (getstoryStatus(_storystatus.values()).equalsIgnoreCase(PENDING)) {
-            System.out.println("NO JIRA ACTION");
-//            getChangeAssigneeJson("automation-script");
-            return "";
-        } else if (getstoryStatus(_storystatus.values()).equalsIgnoreCase(FAIL)) {
+		String jiratransitionurl = Constants.JIRA_URL + Constants.JIRA_ISSUE + _jiraStoryId + "/"
+				+ Constants.JIRA_TRANSITION;
 
-            try {
-                response = new HttpClient().postHttpResponse(jiratransitionurl,
-                        getFailedJiraTicketJson()).getEntity(String.class);
+		if (getstoryStatus(_storystatus.values()).equalsIgnoreCase(PENDING)) {
+			System.out.println("NO JIRA ACTION");
+			// getChangeAssigneeJson("automation-script");
+			return "";
+		} else if (getstoryStatus(_storystatus.values()).equalsIgnoreCase(FAIL)) {
 
-                getChangeAssigneeJson("automation-script");
-            } catch (UniformInterfaceException e) {
-                //e.printStackTrace();
-                getChangeAssigneeJson("automation-script");
-            }
-            System.out.println("\nREOPENING JIRA TICKET:- " + _jiraStoryId
-                    + "\n");
-            return response;
-        } else if (getstoryStatus(_storystatus.values()).equalsIgnoreCase(PASS)) {
-            try {
-                response = new HttpClient().postHttpResponse(jiratransitionurl,
-                        getCloseTicketJson()).getEntity(String.class);
-                changeJiraAssignee(_jiraStoryId, "-1");
-            } catch (UniformInterfaceException e) {
-                //e.printStackTrace();
-            }
-            System.out
-                    .println("\nCLOSING JIRA TICKET:- " + _jiraStoryId + "\n");
-            return response;
-        }
-        return response;
-    }
+			try {
+				response = new HttpClient().postHttpResponse(jiratransitionurl, getFailedJiraTicketJson())
+						.getEntity(String.class);
 
-    private String getstoryStatus(Collection<String> storyvalues) {
-        String returnValue = PASS;
-        for (String value : storyvalues) {
-            if (value.equalsIgnoreCase(FAIL)) {
-                return FAIL;
-            } else if (value.equalsIgnoreCase(PENDING)) {
-                returnValue = PENDING;
-            }
-        }
-        return returnValue;
-    }
+				getChangeAssigneeJson("automation-script");
+			} catch (UniformInterfaceException e) {
+				// e.printStackTrace();
+				getChangeAssigneeJson("automation-script");
+			}
+			System.out.println("\nREOPENING JIRA TICKET:- " + _jiraStoryId + "\n");
+			return response;
+		} else if (getstoryStatus(_storystatus.values()).equalsIgnoreCase(PASS)) {
+			try {
+				response = new HttpClient().postHttpResponse(jiratransitionurl, getCloseTicketJson())
+						.getEntity(String.class);
+				changeJiraAssignee(_jiraStoryId, "-1");
+			} catch (UniformInterfaceException e) {
+				// e.printStackTrace();
+			}
+			System.out.println("\nCLOSING JIRA TICKET:- " + _jiraStoryId + "\n");
+			return response;
+		}
+		return response;
+	}
 
-    private String changeJiraAssignee(String _jiraStoryId, String jiraUserName) {
-        String response = "";
-        String jiraassgineeurl = Constants.JIRA_URL + Constants.JIRA_ISSUE
-                + _jiraStoryId + "/" + Constants.JIRA_ASSIGNEE;
+	private String getstoryStatus(Collection<String> storyvalues) {
+		String returnValue = PASS;
+		for (String value : storyvalues) {
+			if (value.equalsIgnoreCase(FAIL)) {
+				return FAIL;
+			} else if (value.equalsIgnoreCase(PENDING)) {
+				returnValue = PENDING;
+			}
+		}
+		return returnValue;
+	}
 
-        try {
-            response = new HttpClient().putHttpResponse(jiraassgineeurl,
-                    getChangeAssigneeJson(jiraUserName))
-                    .getEntity(String.class
-                    );
-        } catch (UniformInterfaceException e) {
-            e.printStackTrace();
-        }
-        return response;
-    }
+	private String changeJiraAssignee(String _jiraStoryId, String jiraUserName) {
+		String response = "";
+		String jiraassgineeurl = Constants.JIRA_URL + Constants.JIRA_ISSUE + _jiraStoryId + "/"
+				+ Constants.JIRA_ASSIGNEE;
 
-    private String getChangeAssigneeJson(String jiraUsername) {
-        return "{ \"name\":\"" + jiraUsername + "\"}";
-    }
+		try {
+			response = new HttpClient().putHttpResponse(jiraassgineeurl, getChangeAssigneeJson(jiraUserName))
+					.getEntity(String.class);
+		} catch (UniformInterfaceException e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
 
-    private String getCloseTicketJson() {
-        return "{ \"transition\": { \"id\": \"731\" }}";
-    }
+	private String getChangeAssigneeJson(String jiraUsername) {
+		return "{ \"name\":\"" + jiraUsername + "\"}";
+	}
 
-    private String getFailedJiraTicketJson() {
-        return "{ \"transition\": { \"id\": \"761\" }}";
+	private String getCloseTicketJson() {
+		return "{ \"transition\": { \"id\": \"731\" }}";
+	}
 
-    }
+	private String getFailedJiraTicketJson() {
+		return "{ \"transition\": { \"id\": \"721\" }}";
+
+	}
 
 }

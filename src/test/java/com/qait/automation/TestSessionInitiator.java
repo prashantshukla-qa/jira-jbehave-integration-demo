@@ -11,9 +11,11 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import com.qait.automation.keywords.ContentPageActionKeyWords;
+import com.qait.automation.keywords.HeaderPageActionKeyWords;
 import com.qait.automation.keywords.HomePageActionKeyWords;
-import com.qait.automation.keywords.LoginPageActionKeyWords;
-import com.qait.automation.keywords.SearchResultsPageActionKeyWords;
+import com.qait.automation.keywords.ResultsPageActionKeyWords;
+import com.qait.automation.keywords.ThesaurusPageActionKeyWords;
 import com.qait.automation.utils.TakeScreenshot;
 
 public class TestSessionInitiator {
@@ -34,9 +36,11 @@ public class TestSessionInitiator {
 	/**
 	 * Initiating the page objects
 	 */
-	public LoginPageActionKeyWords loginpage;
+	public ThesaurusPageActionKeyWords thesauruspage;
 	public HomePageActionKeyWords homepage;
-	public SearchResultsPageActionKeyWords searchpage;
+	public ResultsPageActionKeyWords resultspage;
+	public HeaderPageActionKeyWords headerpage;
+	public ContentPageActionKeyWords contentpage;
 
 	public TakeScreenshot takescreenshot;
 
@@ -45,9 +49,11 @@ public class TestSessionInitiator {
 	}
 
 	private void _initPage() {
-		loginpage = new LoginPageActionKeyWords(driver);
 		homepage = new HomePageActionKeyWords(driver);
-		searchpage = new SearchResultsPageActionKeyWords(driver);
+		thesauruspage = new ThesaurusPageActionKeyWords(driver);
+		resultspage = new ResultsPageActionKeyWords(driver);
+		headerpage = new HeaderPageActionKeyWords(driver);
+		contentpage = new ContentPageActionKeyWords(driver);
 	}
 
 	/**

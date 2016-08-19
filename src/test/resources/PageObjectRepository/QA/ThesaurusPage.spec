@@ -1,7 +1,8 @@
-Page Title: Basic Search: EBSCOhost
+Page Title: Thesaurus: EBSCOhost
 
 #Object Definitions
 ====================================================================================
-inp_searchTextBox 		 	id       SearchTerm1
-btn_search                  id       SearchButton
+inp_search          xpath     	 	//input[contains(@name,'txtBrowse')]
+txt_warning			css				.thes-warning
+txt_firstResult		css				.thes-record
 ====================================================================================

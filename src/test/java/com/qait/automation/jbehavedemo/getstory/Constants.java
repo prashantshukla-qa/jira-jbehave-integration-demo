@@ -9,7 +9,7 @@ public final class Constants {
     public static final String JIRA_USERNAME = "automation-script";
     public static final String JIRA_PASSWORD = "Qait@123";
 
-    public static final String JIRA_PROJECT_ID = "ASPDEMO";
+    public static final String JIRA_PROJECT_ID = "EHDEMO";
 
     public static final String JIRA_PATH_RAPIDVIEW = "rest/greenhopper/1.0/xboard/work/allData.json?rapidViewId=";
     public static final String JIRA_PATH_JBEHAVE_STORY = "rest/jbehave-for-jira/1.0/find/for-issue/";

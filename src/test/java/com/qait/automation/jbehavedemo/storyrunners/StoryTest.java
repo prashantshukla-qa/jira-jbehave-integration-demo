@@ -23,7 +23,7 @@ import com.qait.automation.jbehavedemo.getstory.JiraSprintStoryFinder;
 import com.qait.automation.utils.FileHandler;
 import com.qait.automation.jbehavedemo.getstory.JiraStoryDownloader;
 import com.qait.automation.jbehavedemo.stepdefs.PageStepDef;
-import com.qait.automation.jbehavedemo.stepdefs.StartTestSteps;
+import com.qait.automation.jbehavedemo.stepdefs.StartTestStepDef;
 
 import static com.qait.automation.utils.ConfigPropertyReader.getProperty;
 
@@ -113,7 +113,7 @@ public class StoryTest extends JUnitStories {
 
 	@Override
 	public InjectableStepsFactory stepsFactory() {
-		return new InstanceStepsFactory(configuration(), new StartTestSteps());
+		return new InstanceStepsFactory(configuration(), new StartTestStepDef());
 	}
 
 	@Override

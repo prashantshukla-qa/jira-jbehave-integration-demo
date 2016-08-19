@@ -1,6 +1,7 @@
-Page Title: Search | Alexander Street
+Page Title: EBSCOhost
 
 #Object Definitions
 ====================================================================================
-txt_resultsSearch	xpath		//div[@class="search-results-count"]/h1
+mainContentArea				id		mainContentArea
+link_resultList				css		a[title='Result List']
 ====================================================================================
