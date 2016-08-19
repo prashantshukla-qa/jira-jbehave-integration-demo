@@ -7,4 +7,5 @@ test-output
 .idea
 .log
 .DS_Store
-.iml
+*.iml
+*.tmp
