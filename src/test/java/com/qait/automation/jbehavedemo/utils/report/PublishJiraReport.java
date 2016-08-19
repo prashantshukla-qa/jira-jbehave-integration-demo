@@ -189,11 +189,11 @@ public class PublishJiraReport {
 	}
 
 	private String getCloseTicketJson() {
-		return "{ \"transition\": { \"id\": \"731\" }}";
+		return "{ \"transition\": { \"id\": \"741\" }}";
 	}
 
 	private String getFailedJiraTicketJson() {
-		return "{ \"transition\": { \"id\": \"721\" }}";
+		return "{ \"transition\": { \"id\": \"731\" }}";
 
 	}
 
